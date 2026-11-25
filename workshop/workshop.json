@@ -1,0 +1,15 @@
+{
+  "title": "Combat Statistics Fix (unofficial) [Beta]",
+  "description": "Unofficial fix for [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3781790213]Combat Statistics[/url] by [i]Blackdevil[/i]. All credit goes to the original author.\n\nLike the original mod, this only works on the public-beta branch for now.\nIt's only an extension, so the original mod is required. It doesn't affect gameplay, and in multiplayer the other players don't need it.\n\n[b]What it fixes[/b]\n[list]\n[*]The Continue button on the defeat and victory screens, broken since [i]The Fool[/i] update ([i]v0.113[/i]) in November 2026\n[*]Combat stats only showing for the first fight of each game launch, with certain other mods installed ([i]Into the Spireverse[/i], for example)\n[*][i]Osty[/i] and damage from powers and relics not being tracked, since [i]v0.113[/i]\n[*][i]Wuppy[/i]'s absorbed damage not being tracked, new since [i]v0.113[/i]\n[/list]\n\nThe code is public here: [url=https://github.com/jciurc/sts2-combat-stats-fix]github.com/jciurc/sts2-combat-stats-fix[/url]\n[hr][/hr]\n[i]Version: 0.2.0\nMod ID: CombatStatisticsFix\nAuthor: symphony[/i]",
+  "visibility": "unlisted",
+  "changeNote": "0.2.0: first release. Fixes the Continue button and missing Osty and damage-source stats on game v0.113 and later, and the overlay showing only for the first fight, and adds Wuppy's stats.",
+  "tags": [
+    "QoL"
+  ],
+  "dependencies": [
+    3781790213
+  ],
+  "contentDescriptors": [],
+  "minBranch": "public-beta",
+  "maxBranch": null
+}

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>CombatStatisticsFix</AssemblyName>
+    <RootNamespace>CombatStatisticsFix</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- build.cs and tools/dev.cs pass the Steam library in; any other build uses STS2_STEAMAPPS, else the first of
+         Steam's default folder and a drive-root SteamLibrary that has the game (C: to H:); a library anywhere else needs
+         STS2_STEAMAPPS, and the build says so -->
+    <SteamLibrary Condition="'$(SteamLibrary)' == ''">$(STS2_STEAMAPPS)</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('C:\Program Files (x86)\Steam\steamapps\common\Slay the Spire 2')">C:\Program Files (x86)\Steam\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('C:\SteamLibrary\steamapps\common\Slay the Spire 2')">C:\SteamLibrary\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('D:\SteamLibrary\steamapps\common\Slay the Spire 2')">D:\SteamLibrary\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('E:\SteamLibrary\steamapps\common\Slay the Spire 2')">E:\SteamLibrary\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('F:\SteamLibrary\steamapps\common\Slay the Spire 2')">F:\SteamLibrary\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('G:\SteamLibrary\steamapps\common\Slay the Spire 2')">G:\SteamLibrary\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == '' And Exists('H:\SteamLibrary\steamapps\common\Slay the Spire 2')">H:\SteamLibrary\steamapps</SteamLibrary>
+    <SteamLibrary Condition="'$(SteamLibrary)' == ''">C:\Program Files (x86)\Steam\steamapps</SteamLibrary>
+    <GameData Condition="'$(GameData)' == ''">$(SteamLibrary)\common\Slay the Spire 2\data_sts2_windows_x86_64</GameData>
+  </PropertyGroup>
+
+  <!-- the Workshop build (build.cs with its dist option) holds only what players run: no self-test, no debug info -->
+  <PropertyGroup Condition="'$(CombatStatisticsFixWorkshop)' != 'true'">
+    <DefineConstants>$(DefineConstants);DEVTOOLS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CombatStatisticsFixWorkshop)' == 'true'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(CombatStatisticsFixWorkshop)' == 'true'">
+    <Compile Remove="SelfTest.cs" />
+  </ItemGroup>
+
+  <Target Name="FindGame" BeforeTargets="ResolveAssemblyReferences" Condition="!Exists('$(GameData)\sts2.dll')">
+    <Error Text="Slay the Spire 2 isn't in $(SteamLibrary). Set STS2_STEAMAPPS to the steamapps folder of the Steam library that has it, or build with dotnet run build.cs, which finds it." />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="sts2" HintPath="$(GameData)\sts2.dll" Private="false" />
+    <Reference Include="GodotSharp" HintPath="$(GameData)\GodotSharp.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(GameData)\0Harmony.dll" Private="false" />
+  </ItemGroup>
+
+</Project>
